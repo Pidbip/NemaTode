@@ -13,9 +13,12 @@
 #include <string>
 #include <chrono>
 #include <functional>
-#include <nmeaparse/GPSFix.h>
-#include <nmeaparse/NMEAParser.h>
-#include <nmeaparse/Event.h>
+
+#include "GPSFix.h"
+#include "NMEAParser.h"
+#include "Event.h"
+
+
 
 namespace nmea {
 
@@ -28,6 +31,13 @@ private:
 	void read_GPGSV	(const NMEASentence& nmea);
 	void read_GPRMC	(const NMEASentence& nmea);
 	void read_GPVTG	(const NMEASentence& nmea);
+
+
+	//GNSS Service
+	void read_GNGGA (const NMEASentence& nmea);
+	void read_GNVTG	(const NMEASentence& nmea);
+	void read_GNRMC	(const NMEASentence& nmea);
+	void read_GNGSA	(const NMEASentence& nmea);
 
 public:
 	GPSFix fix;

@@ -58,7 +58,7 @@ namespace nmea {
 		// (none)
 
 		// Functions
-		EventHandler(std::function<void(Args...)> h) : _iterator(), handler(h), ID(++LastID)
+		EventHandler(std::function<void(Args...)> h) : _iterator(), ID(++LastID), handler(h)
 		{}
 
 		EventHandler(const EventHandler& ref){
@@ -197,7 +197,7 @@ namespace nmea {
 			handlers.clear();
 		};
 
-		void operator ()(Args... args)													{ return call(args...); };
+		void operator ()(Args... args)													{ call(args...); };
 		EventHandler<void(Args...)> operator +=(EventHandler<void(Args...)> handler)	{ return registerHandler(handler); };
 		EventHandler<void(Args...)> operator +=(std::function<void(Args...)> handler)	{ return registerHandler(handler); };
 		bool operator -=(EventHandler<void(Args...)>& handler)							{ return removeHandler(handler); };

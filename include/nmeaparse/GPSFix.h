@@ -65,6 +65,7 @@ namespace nmea {
 		void updateSatellite(GPSSatellite sat);
 	public:
 		GPSAlmanac() :
+			visibleSize(0),
 			lastPage(0),
 			totalPages(0),
 			processedPages(0)

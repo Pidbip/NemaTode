@@ -11,7 +11,8 @@
 #define NMEAPARSER_H_
 
 
-#include <nmeaparse/Event.h>
+#include "Event.h"
+
 #include <string>
 #include <functional>
 #include <unordered_map>
@@ -19,13 +20,8 @@
 #include <cstdint>
 #include <exception>
 
-
-
 //read class definition for info
 #define NMEA_PARSER_MAX_BUFFER_SIZE 2000
-
-
-
 
 
 namespace nmea {
