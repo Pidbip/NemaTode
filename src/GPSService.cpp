@@ -105,6 +105,10 @@ void GPSService::attachToParser(NMEAParser& _parser){
 		this->read_GNGSA(nmea);
 	});
 
+	_parser.setSentenceHandler("GNHDM", [this](const NMEASentence& nmea){
+		this->read_GNHDM(nmea);
+	});
+
 }
 
 
@@ -837,4 +841,43 @@ void GPSService::read_GNGSA(const NMEASentence& nmea){
 		throw pe;
 	}
 }
+
+void GPSService::read_GNHDM(const NMEASentence& nmea){
+	/*  -- EXAMPLE --
+	//$GNHDM,291.425290,M*19
+
+	Where:
+	HDM      Heading - Magnetic
+	[0] M    Magnetic
+	[1] *39      the checksum data, always begins with *
+	*/
+
+	try
+	{
+		if (!nmea.checksumOK()){
+			throw NMEAParseError("Checksum is invalid!");
+		}
+
+		if (nmea.parameters.size() < 2){
+			throw NMEAParseError("GPS data is missing parameters.");
+		}
+
+		// Heading - Magnetic  -- HM
+		double hm = parseDouble(nmea.parameters[0]);
+		this->fix.magneticHeading = hm;
+
+		this->onUpdate();
+	}
+	catch (NumberConversionError& ex)
+	{
+		NMEAParseError pe("GPS Number Bad Format [$GNHDM] :: " + ex.message, nmea);
+		throw pe;
+	}
+	catch (NMEAParseError& ex)
+	{
+		NMEAParseError pe("GPS Data Bad Format [$GNHDM] :: " + ex.message, nmea);
+		throw pe;
+	}
+}
+
 

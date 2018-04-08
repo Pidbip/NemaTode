@@ -191,6 +191,7 @@ void NMEAParser::readSentence(std::string cmd){
 
 	NMEASentence nmea;
 
+
 	onInfo(nmea, "Processing NEW string...");
 	
 	if (cmd.size() == 0){
@@ -347,6 +348,7 @@ void NMEAParser::parseText(NMEASentence& nmea, string txt){
 				nmea.isvalid = false;
 				return;
 			}
+
 			nmea.name = txt;
 			nmea.isvalid = true;
 			return;
